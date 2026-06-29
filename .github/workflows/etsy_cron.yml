@@ -1,0 +1,36 @@
+name: Notification Commandes Etsy
+
+on:
+  schedule:
+    # Ce code cron signifie "À la minute 0 toutes les 12 heures"
+    - cron: '0 */12 * * *'
+  workflow_dispatch: 
+    # Ceci ajoute un bouton pour pouvoir lancer le script manuellement pour le tester
+
+jobs:
+  verifier_commandes:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Récupérer votre code depuis le dépôt
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      # 2. Installer Python
+      - name: Installation de Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # 3. Installer la librairie "requests" nécessaire au script
+      - name: Installation des dépendances
+        run: pip install requests
+
+      # 4. Lancer le script en lui injectant les secrets
+      - name: Lancer le script Etsy
+        env:
+          ETSY_SHOP_ID: ${{ secrets.ETSY_SHOP_ID }}
+          ETSY_ACCESS_TOKEN: ${{ secrets.ETSY_ACCESS_TOKEN }}
+          ETSY_API_KEY: ${{ secrets.ETSY_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python etsy_notifier.py
