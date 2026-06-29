@@ -35,12 +35,12 @@ def get_recent_etsy_orders():
 
 def send_discord_notification(order):
     # Vous pouvez personnaliser ce message !
-    message = f"🎉 **Nouvelle Commande Etsy !**\n" \
-              f"Montant : {order['grandtotal']['amount']} {order['grandtotal']['currency_code']}\n" \
-              f"Acheteur : {order['name']}"
+    # message = f"🎉 **Nouvelle Commande Etsy !**\n" \
+              # f"Montant : {order['grandtotal']['amount']} {order['grandtotal']['currency_code']}\n" \
+              # f"Acheteur : {order['name']}"
               
-    payload = {"content": message}
-    requests.post(DISCORD_WEBHOOK_URL, json=payload)
+    # payload = {"content": message}
+    # requests.post(DISCORD_WEBHOOK_URL, json=payload)
 
 # --- EXECUTION DU SCRIPT ---
 if __name__ == "__main__":
